@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Password Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 60px 60px;
+            gap: 60px;
+        }
+
+        .hero-section {
+            flex: 1;
+            max-width: 500px;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0 0 25px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin: 0;
+            opacity: 0.95;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .container-wrapper {
+            flex: 0 0 auto;
+            margin-right: 80px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 15px 40px;
+            display: flex;
+            gap: 35px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 24px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .navbar a.active {
+            background: rgba(156, 110, 255, 0.8);
+            box-shadow: 0 4px 15px rgba(156, 110, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 85%;
+                max-width: 500px;
+                padding: 12px 25px;
+                gap: 20px;
+            }
+
+            .navbar a {
+                padding: 8px 18px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                width: 90%;
+                padding: 10px 15px;
+                gap: 10px;
+                border-radius: 40px;
+            }
+
+            .navbar a {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .navbar {
+                gap: 6px;
+                padding: 8px 12px;
+            }
+
+            .navbar a {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .main-content {
+                flex-direction: column;
+                justify-content: center;
+                padding: 120px 40px 60px;
+                gap: 40px;
+            }
+
+            .hero-section {
+                max-width: 100%;
+                text-align: center;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 100px 20px 40px;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+        }
+
+        footer {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 15px 40px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            color: white;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: rgb(156, 110, 255);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                padding: 12px 25px;
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            footer a {
+                margin-left: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            footer {
+                padding: 10px 20px;
+                gap: 10px;
+                font-size: 11px;
+                flex-wrap: wrap;
+            }
+
+            footer a {
+                margin-left: 5px;
+            }
+        }
+
+        .lock-logo {
+            position: fixed;
+            top: 25px;
+            left: 30px;
+            z-index: 1001;
+            filter: drop-shadow(0 4px 15px rgba(217, 241, 3, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .lock-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .lock-logo svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .lock-logo {
+                top: 20px;
+                left: 20px;
+            }
+
+            .lock-logo svg {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        body::before {
+            content: "center";
+            position: absolute;
+            inset: 0;
+            background-image: url("https://plus.unsplash.com/premium_photo-1681487746049-c39357159f69?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI1fHxzZWN1cml0eXxlbnwwfHwwfHx8MA%3D%3D");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(6px);
+            transform: scale(1.1);
+            z-index: -1;
+        }
+
+
+
+        .container {
+            background: linear-gradient(135deg, rgba(155, 130, 255, 0.95) 0%, rgba(179, 121, 255, 0.95) 100%);
+            padding: 30px;
+            border-radius: 20px;
+            width: 320px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #19197a;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0;
+            font-size: 14px;
+            color: #0D0D55;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 6px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        .options {
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #ffea29;
+            color: #000000;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(217, 241, 3, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217, 241, 3, 0.5);
+            background: #e6f71a;
+        }
+
+        .password-box {
+            margin-top: 15px;
+            background: rgba(13, 13, 85, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            word-break: break-all;
+            font-family: monospace;
+            color: #D9F103;
+            border: 1px solid rgba(217, 241, 3, 0.3);
+            font-size: 14px;
+        }
+
+        .copy-btn {
+            background: #FF99DC;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 153, 220, 0.3);
+            color: #0D0D55;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 153, 220, 0.5);
+            background: #ffb3e6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="lock-logo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="11" width="14" height="10" rx="2" fill="rgba(217, 241, 3, 0.9)" stroke="rgba(217, 241, 3, 1)"
+                stroke-width="1" />
+            <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="rgba(217, 241, 3, 1)"
+                stroke-width="2" stroke-linecap="round" />
+            <circle cx="12" cy="15" r="1.5" fill="#0D0D55" />
+            <line x1="12" y1="16.5" x2="12" y2="18.5" stroke="#0D0D55" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+    </div>
+
+    <nav class="navbar">
+        <a href="#" class="active">Home</a>
+        <a href="#">Generator</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="main-content">
+        <div class="hero-section">
+            <h1>Strong. Secure. Awesome.</h1>
+            <p>Try our random password generator.</p>
+            <p style="margin-top: 15px;">A powerful generator for powerful passwords to protect your online accounts.
+            </p>
+        </div>
+
+        <div class="container-wrapper">
+            <div class="container">
+                <h2>Password Generator</h2>
+
+                <label>
+                    Password Length
+                    <input type="number" id="length" value="12" min="6" max="32">
+                </label>
+
+                <div class="options">
+                    <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label>
+                    <label><input type="checkbox" id="numbers" checked> Include Numbers</label>
+                    <label><input type="checkbox" id="symbols"> Include Symbols</label>
+                </div>
+
+                <button onclick="generatePassword()">Generate Password</button>
+
+                <div class="password-box" id="password">Your password will appear here</div>
+
+                <button class="copy-btn" onclick="copyPassword()">Copy Password</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <span>© 2026 Password Generator</span>
+        <span>|</span>
+        <span>Developed by Kunal, Aaditya, Arnesh, Anushka</span>
+        <div>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        const lower = "abcdefghijklmnopqrstuvwxyz";
+        const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const numbers = "0123456789";
+        const symbols = "!@#$%^&*()_+{}[]<>?";
+
+        function generatePassword() {
+            const length = document.getElementById("length").value;
+            const useUpper = document.getElementById("uppercase").checked;
+            const useNumbers = document.getElementById("numbers").checked;
+            const useSymbols = document.getElementById("symbols").checked;
+
+            let characters = lower;
+            if (useUpper) characters += upper;
+            if (useNumbers) characters += numbers;
+            if (useSymbols) characters += symbols;
+
+            if (!characters) {
+                alert("Please select at least one option!");
+                return;
+            }
+
+            let password = "";
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                password += characters[randomIndex];
+            }
+
+            // Regex-based validation
+            if (!isValid(password, useUpper, useNumbers, useSymbols)) {
+                generatePassword();
+                return;
+            }
+
+            document.getElementById("password").innerText = password;
+        }
+
+        function isValid(password, useUpper, useNumbers, useSymbols) {
+            if (useUpper && !/[A-Z]/.test(password)) return false;
+            if (useNumbers && !/\d/.test(password)) return false;
+            if (useSymbols && !/[!@#$%^&*()_+{}[\]<>?]/.test(password)) return false;
+            return true;
+        }
+
+        function copyPassword() {
+            const password = document.getElementById("password").innerText;
+
+            if (password === "Your generated passwor") {
+                alert("Generate a password first!");
+                return;
+            }
+
+            navigator.clipboard.writeText(password);
+            alert("Password copied to clipboard!");
+        }
+    </script>
+
+</body>
+
+</html>
